@@ -1,17 +1,17 @@
 dataSources:
   shardwallet1:
-    jdbc-url: jdbc:mysql://localhost:3306/shardwallet1
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/shardwallet1
     username: root
     password: root@123
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
 
   shardwallet2:
-    jdbc-url: jdbc:mysql://localhost:3306/shardwallet2
+    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
+    driverClassName: com.mysql.cj.jdbc.Driver
+    jdbcUrl: jdbc:mysql://localhost:3306/shardwallet2
     username: root
     password: root@123
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    dataSourceClassName: com.zaxxer.hikari.HikariDataSource
 
 rules:
   - !SHARDING
@@ -35,3 +35,6 @@ rules:
     keyGenerators:
       snowflake:
         type: SNOWFLAKE
+
+props:
+  sql-show: true
