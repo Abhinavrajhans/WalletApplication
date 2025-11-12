@@ -11,6 +11,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 @RequiredArgsConstructor
 @Slf4j
@@ -27,11 +30,19 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public UserResponseDTO getUserById(Long id) {
+    public UserResponseDTO findUserById(Long id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User does not exist"));
         return UserAdapter.toDTO(user);
     }
+
+    @Override
+    public List<UserResponseDTO> findUserByName(String name)
+    {
+        return this.userRepository.findByNameContainingIgnoreCase(name).stream().map(UserAdapter::toDTO).collect(Collectors.toList());
+    }
+
+
 
 
 }

@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
@@ -23,7 +25,12 @@ public class UserController {
 
     @GetMapping("/id/{id}")
     public ResponseEntity<UserResponseDTO> getUserById(@PathVariable Long id){
-        return ResponseEntity.ok().body(userService.getUserById(id));
+        return ResponseEntity.ok().body(userService.findUserById(id));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<UserResponseDTO>> findUserByName(@RequestParam String name){
+        return ResponseEntity.ok().body(userService.findUserByName(name));
     }
 
 
