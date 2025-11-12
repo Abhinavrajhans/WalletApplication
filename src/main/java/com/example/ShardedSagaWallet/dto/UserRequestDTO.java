@@ -1,20 +1,16 @@
-package com.example.ShardedSagaWallet.entities;
+package com.example.ShardedSagaWallet.dto;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 
-
 @Getter
 @Setter
-@Entity
-@Table(name="user")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class User extends BaseModel{
+public class UserRequestDTO {
 
     @NotBlank(message="Name is required")
     @Size(min=3 , max=100 , message="name character must be between 3 and 100")
@@ -24,5 +20,6 @@ public class User extends BaseModel{
     @NotBlank(message="email is required.")
     @Email(message="Email should be valid")
     private String email;
+
 
 }
