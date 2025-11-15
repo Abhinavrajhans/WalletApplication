@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface SagaStepRepository extends JpaRepository<SagaStep, Long> {
 
@@ -16,11 +17,18 @@ public interface SagaStepRepository extends JpaRepository<SagaStep, Long> {
     //using this method what we can do is we can pass the sagainstanceId and status
     // inorder to fetch the sagastep this will give us more granular control
     List<SagaStep> findBySagaInstanceIdAndStatus(Long sagaInstanceId , StepStatus status);
+
+
+    // find by sagainstanceId and
+    Optional<SagaStep> findBySagaInstanceIdAndStepNameAndStatus(Long sagaInstanceId , String stepNam,StepStatus status);
+
+
+
     // every saga step has a status
     // find completed state of a sagainstance id
     // it would be better to fing the completed step as we might need to compensate them
-    @Query("SELECT s FROM SagaStep s WHERE s.sagaInstanceId = :sagaInstanceId AND s.status = :status")
-    List<SagaStep> findCompletedStepsBySagaInstanceId(@Param("sagaInstanceId") Long sagaInstanceId, @Param("status") String status);
+    @Query("SELECT s FROM SagaStep s WHERE s.sagaInstanceId = :sagaInstanceId AND s.status = 'COMPLETED'")
+    List<SagaStep> findCompletedStepsBySagaInstanceId(@Param("sagaInstanceId") Long sagaInstanceId);
 
 
     // we want to have completed or compensated so this status query can be a in query
