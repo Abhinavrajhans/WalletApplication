@@ -21,7 +21,7 @@ public interface TransactionRepository extends JpaRepository<Transaction,Long> {
     List<Transaction> findByWalletId(@Param("walletId") Long walletId);
 
     //find a transaction by status
-    List<Transaction> findByTransactionStatus(TransactionStatus transactionStatus);
+    List<Transaction> findByStatus(TransactionStatus transactionStatus);
 
     //find by sagaInstanceId
     List<Transaction> findBySagaInstanceId(Long sagaInstanceId);
