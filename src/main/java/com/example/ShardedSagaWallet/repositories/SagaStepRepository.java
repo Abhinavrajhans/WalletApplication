@@ -1,6 +1,7 @@
 package com.example.ShardedSagaWallet.repositories;
 
-import com.example.ShardedSagaWallet.services.saga.SagaStep;
+import com.example.ShardedSagaWallet.entities.SagaStep;
+import com.example.ShardedSagaWallet.entities.StepStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -12,6 +13,9 @@ public interface SagaStepRepository extends JpaRepository<SagaStep, Long> {
     // we should be able to find all the saga steps belong to a sagainstanceid
     List<SagaStep> findBySagaInstanceId(Long sagaInstanceId);
 
+    //using this method what we can do is we can pass the sagainstanceId and status
+    // inorder to fetch the sagastep this will give us more granular control
+    List<SagaStep> findBySagaInstanceIdAndStatus(Long sagaInstanceId , StepStatus status);
     // every saga step has a status
     // find completed state of a sagainstance id
     // it would be better to fing the completed step as we might need to compensate them
