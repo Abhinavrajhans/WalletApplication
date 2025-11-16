@@ -59,7 +59,7 @@ public class UpdateTransactionStatus implements SagaStepInterface {
         transaction.setStatus(originalTransactionStatus);
         transactionRepository.save(transaction);
         log.info("Transaction status compensated for transaction {}", transactionId);
-        return false;
+        return true;
     }
 
     @Override

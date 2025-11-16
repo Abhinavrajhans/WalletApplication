@@ -20,7 +20,7 @@ import java.util.Map;
 public class TransferSagaService {
 
     private final TransactionService transactionService;
-    private SagaOrchestrator sagaOrchestrator;
+    private final SagaOrchestrator sagaOrchestrator;
 
 
     @Transactional
@@ -61,6 +61,7 @@ public class TransferSagaService {
         // and then execute the transfer
     }
 
+    @Transactional
     public void exectueTransferSaga(Long sagaInstanceId) {
         // this will only do one single thing
         log.info("Executing transfer saga with id {}",sagaInstanceId);
@@ -79,7 +80,7 @@ public class TransferSagaService {
 
                 }
             }
-            sagaOrchestrator.compensateSaga(sagaInstanceId);
+            sagaOrchestrator.completeSaga(sagaInstanceId);
             log.info("Transfer saga completed with id {}",sagaInstanceId);
         }catch(Exception e){
             log.info("Failed to execute transfer saga with id {}",sagaInstanceId,e);
