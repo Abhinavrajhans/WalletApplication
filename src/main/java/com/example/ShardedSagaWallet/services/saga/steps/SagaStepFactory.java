@@ -4,6 +4,7 @@ import com.example.ShardedSagaWallet.services.saga.SagaStepInterface;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Map;
 
 @Component
@@ -21,4 +22,10 @@ public class SagaStepFactory {
     {
        return sagaStepMap.get(stepName);
     }
+    public static List<SagaStepType> TransferMoneySagaSteps=List.of(
+            SagaStepFactory.SagaStepType.DEBIT_SOURCE_WALLET_STEP,
+            SagaStepFactory.SagaStepType.CREDIT_DESTINATION_WALLET_STEP,
+            SagaStepFactory.SagaStepType.UPDATE_TRANSACTION_STATUS_STEP
+    );
+    // here the list define we should do what in what order.
 }
