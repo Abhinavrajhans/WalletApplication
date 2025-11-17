@@ -32,14 +32,17 @@ public class DebitSourceWalletStep implements SagaStepInterface {
                 orElseThrow(() -> new IllegalArgumentException("Wallet not found"));
         log.info("Wallet fetched with balance {}", wallet.getBalance());
         sagaContext.put("originalSourceWalletBalance", wallet.getBalance());
+        // TODO : Once the context is updated in memory , we need to update the context in the database
         //in the wallet we had a method called as hasSufficientBalance
         //if we need to deduct some money then we have to check whether the wallet has a sufficient money or not
         // but we are doing this check in the wallet.debit function so no need to write anything extra
         //if everthing is in place , same thing as credit
-        wallet.debit(amount);
-        walletRepository.save(wallet);
+        //wallet.debit(amount);
+        //walletRepository.save(wallet);
+        walletRepository.updateBalanceByUserId(fromWalletId, wallet.getBalance().subtract(amount));
         log.info("wallet saved with balance {}", wallet.getBalance());
         sagaContext.put("sourceWalletBalanceAfterDebit",wallet.getBalance());
+        // TODO : Once the context is updated in memory , we need to update the context in the database
         log.info("Debiting source wallet step executed successfully");
         return true;
     }
@@ -59,9 +62,9 @@ public class DebitSourceWalletStep implements SagaStepInterface {
         log.info("Wallet fetched with balance {}", wallet.getBalance());
         sagaContext.put("sourceWalletBalanceBeforeCreditCompensation", wallet.getBalance());
 
-        wallet.credit(amount);
-        walletRepository.save(wallet);
-
+        //wallet.credit(amount);
+        //walletRepository.save(wallet);
+        walletRepository.updateBalanceByUserId(fromWalletId, wallet.getBalance().add(amount));
         log.info("wallet saved with balance {}", wallet.getBalance());
         sagaContext.put("sourceWalletBalanceAfterCreditCompensation",wallet.getBalance());
         log.info("Compensating source wallet step executed successfully");

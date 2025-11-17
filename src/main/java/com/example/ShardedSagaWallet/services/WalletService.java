@@ -34,22 +34,25 @@ public class WalletService {
                 .orElseThrow(() -> new RuntimeException("Wallet not found"));
     }
 
-    @Transactional
-    public void debit(Long walletId , DebitWalletRequestDTO debitWalletRequestDTO) {
-        log.info("Debiting {} from wallet {}" , debitWalletRequestDTO.getAmount() , walletId);
-        Wallet wallet =  getByWalletId(walletId);
-        wallet.debit(debitWalletRequestDTO.getAmount());
-        walletRepository.save(wallet);
-        log.info("Debit successful for wallet {}", walletId);
+    public Wallet getWalletByUserId(Long userId) {
+        log.info("Getting wallet by user id {}", userId);
+        return walletRepository.findByUserId(userId).get(0);
     }
 
     @Transactional
-    public void credit(Long walletId , CreditWalletRequestDTO creditWalletRequestDTO) {
-        log.info("Crediting {} from wallet {}" , creditWalletRequestDTO.getAmount() , walletId);
-        Wallet wallet =  getByWalletId(walletId);
-        wallet.credit(creditWalletRequestDTO.getAmount());
-        walletRepository.save(wallet);
-        log.info("Credit successful for wallet {}", walletId);
+    public void debit(Long userId , DebitWalletRequestDTO debitWalletRequestDTO) {
+        log.info("Debiting {} from userId {}" , debitWalletRequestDTO.getAmount() , userId);
+        Wallet wallet =  getWalletByUserId(userId);
+        walletRepository.updateBalanceByUserId(userId, wallet.getBalance().subtract(debitWalletRequestDTO.getAmount()));
+        log.info("Debit successful for wallet {}", userId);
+    }
+
+    @Transactional
+    public void credit(Long userId , CreditWalletRequestDTO creditWalletRequestDTO) {
+        log.info("Crediting {} from userId {}" , creditWalletRequestDTO.getAmount() , userId);
+        Wallet wallet =  getWalletByUserId(userId);
+        walletRepository.updateBalanceByUserId(userId, wallet.getBalance().add(creditWalletRequestDTO.getAmount()));
+        log.info("Credit successful for userId {}", userId);
     }
 
     public BigDecimal getWalletBalance(Long walletId){

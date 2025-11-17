@@ -51,19 +51,19 @@ public class WalletController {
         return ResponseEntity.ok(balance);
     }
 
-    @PostMapping("/{id}/debit")
-    public ResponseEntity<WalletResponseDTO> debitWallet(@PathVariable Long id, @Valid @RequestBody DebitWalletRequestDTO debitWalletRequestDTO)
+    @PostMapping("/{userId}/debit")
+    public ResponseEntity<WalletResponseDTO> debitWallet(@PathVariable Long userId, @Valid @RequestBody DebitWalletRequestDTO debitWalletRequestDTO)
     {
-       walletService.debit(id,debitWalletRequestDTO);
-       Wallet wallet=walletService.getByWalletId(id);
+       walletService.debit(userId,debitWalletRequestDTO);
+       Wallet wallet=walletService.getWalletByUserId(userId);
        return ResponseEntity.ok(WalletAdapter.toDTO(wallet));
     }
 
-    @PostMapping("/{id}/credit")
-    public ResponseEntity<WalletResponseDTO> debitWallet(@PathVariable Long id, @Valid @RequestBody CreditWalletRequestDTO creditWalletRequestDTO)
+    @PostMapping("/{userId}/credit")
+    public ResponseEntity<WalletResponseDTO> debitWallet(@PathVariable Long userId, @Valid @RequestBody CreditWalletRequestDTO creditWalletRequestDTO)
     {
-        walletService.credit(id,creditWalletRequestDTO);
-        Wallet wallet=walletService.getByWalletId(id);
+        walletService.credit(userId,creditWalletRequestDTO);
+        Wallet wallet=walletService.getWalletByUserId(userId);
         return ResponseEntity.ok(WalletAdapter.toDTO(wallet));
     }
 }

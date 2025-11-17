@@ -36,12 +36,14 @@ public class CreditDestinationWalletStep implements SagaStepInterface {
         sagaContext.put("originalToWalletBalance", wallet.getBalance());
         // store the balance before the cerdit comes.
         // step 3 : Credit the destination wallet
-        wallet.credit(amount);
+        //wallet.credit(amount);
+        walletRepository.updateBalanceByUserId(toWalletId, wallet.getBalance().add(amount));
         // by only updating the object only the java object in our memory will be updated.
         // in order to make sure this persists in the db u need to save using the repo
         walletRepository.save(wallet);
         log.info("Wallet saved with balance {}", wallet.getBalance());
         sagaContext.put("toWalletBalanceAfterCredit", wallet.getBalance());
+        // TODO : Once the context is updated in memory , we need to update the context in the database
         log.info("Credit Destination wallet step executed successfully");
         return true;
     }
@@ -64,7 +66,8 @@ public class CreditDestinationWalletStep implements SagaStepInterface {
         sagaContext.put("originalToWalletBalance", wallet.getBalance());
         // store the balance before the cerdit comes.
         // step 3 : Debit the destination wallet
-        wallet.debit(amount);
+        //wallet.debit(amount);
+        walletRepository.updateBalanceByUserId(toWalletId, wallet.getBalance().subtract(amount));
         // by only updating the object only the java object in our memory will be updated.
         // in order to make sure this persists in the db u need to save using the repo
         walletRepository.save(wallet);

@@ -26,10 +26,12 @@ public class Transaction extends BaseModel{
 
     @Enumerated(EnumType.STRING)
     @Column(name="status", nullable =false)
+    @Builder.Default
     private TransactionStatus status = TransactionStatus.PENDING;
 
     @Enumerated(EnumType.STRING)
     @Column(name="transaction_type" , nullable = false)
+    @Builder.Default
     private TransactionType type = TransactionType.TRANSFER;
 
     @Column(name="description" , nullable =false)

@@ -22,6 +22,7 @@ public class WalletAdapter {
                 .isactive(entity.getIsactive())
                 .balance(entity.getBalance())
                 .userId(entity.getUserId())
+                .createdAt(entity.getCreatedAt())
                 .build();
     }
 }
