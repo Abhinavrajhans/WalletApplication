@@ -23,6 +23,7 @@ public class Wallet extends BaseModel{
     private Boolean isactive;
 
     @Column(name="balance",nullable=false)
+    @Builder.Default
     private BigDecimal balance=BigDecimal.ZERO;
 
     public boolean hasSufficientBalance(BigDecimal amount){

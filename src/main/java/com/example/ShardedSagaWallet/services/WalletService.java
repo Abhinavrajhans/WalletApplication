@@ -1,5 +1,10 @@
 package com.example.ShardedSagaWallet.services;
 
+import com.example.ShardedSagaWallet.adapters.WalletAdapter;
+import com.example.ShardedSagaWallet.dto.CreditWalletRequestDTO;
+import com.example.ShardedSagaWallet.dto.DebitWalletRequestDTO;
+import com.example.ShardedSagaWallet.dto.WalletRequestDTO;
+import com.example.ShardedSagaWallet.dto.WalletResponseDTO;
 import com.example.ShardedSagaWallet.entities.Wallet;
 import com.example.ShardedSagaWallet.repositories.WalletRepository;
 import lombok.RequiredArgsConstructor;
@@ -17,12 +22,8 @@ public class WalletService {
     private final WalletRepository walletRepository;
 
 
-    public Wallet createWallet(Long userId) {
-        Wallet wallet= Wallet.builder()
-                .userId(userId)
-                .isactive(true)
-                .balance(BigDecimal.ZERO)
-                .build();
+    public Wallet createWallet(WalletRequestDTO dto) {
+        Wallet wallet= WalletAdapter.toEntity(dto);
         wallet = walletRepository.save(wallet);
         log.info("Wallet created with id {}", wallet.getId());
         return wallet;
@@ -34,19 +35,19 @@ public class WalletService {
     }
 
     @Transactional
-    public void debit(Long walletId , BigDecimal amount){
-        log.info("Debiting {} from wallet {}" , amount , walletId);
+    public void debit(Long walletId , DebitWalletRequestDTO debitWalletRequestDTO) {
+        log.info("Debiting {} from wallet {}" , debitWalletRequestDTO.getAmount() , walletId);
         Wallet wallet =  getByWalletId(walletId);
-        wallet.debit(amount);
+        wallet.debit(debitWalletRequestDTO.getAmount());
         walletRepository.save(wallet);
         log.info("Debit successful for wallet {}", walletId);
     }
 
     @Transactional
-    public void credit(Long walletId , BigDecimal amount){
-        log.info("Crediting {} from wallet {}" , amount , walletId);
+    public void credit(Long walletId , CreditWalletRequestDTO creditWalletRequestDTO) {
+        log.info("Crediting {} from wallet {}" , creditWalletRequestDTO.getAmount() , walletId);
         Wallet wallet =  getByWalletId(walletId);
-        wallet.credit(amount);
+        wallet.credit(creditWalletRequestDTO.getAmount());
         walletRepository.save(wallet);
         log.info("Credit successful for wallet {}", walletId);
     }
