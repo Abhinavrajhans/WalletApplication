@@ -3,10 +3,7 @@ package com.example.ShardedSagaWallet.adapters;
 import com.example.ShardedSagaWallet.dto.TransactionRequestDTO;
 import com.example.ShardedSagaWallet.dto.TransactionResponseDTO;
 import com.example.ShardedSagaWallet.entities.Transaction;
-import com.example.ShardedSagaWallet.entities.TransactionStatus;
-import com.example.ShardedSagaWallet.entities.TransactionType;
 
-import java.math.BigDecimal;
 
 public class TransactionAdapter {
 
