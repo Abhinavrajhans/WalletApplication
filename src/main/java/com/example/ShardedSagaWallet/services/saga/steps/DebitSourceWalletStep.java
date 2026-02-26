@@ -48,6 +48,7 @@ public class DebitSourceWalletStep implements SagaStepInterface {
     }
 
     @Override
+    @Transactional
     public boolean compensate(SagaContext sagaContext) {
         // step 1: from the saga context we have to get the source wallet id
         Long fromWalletId = sagaContext.getLong("fromWalletId");

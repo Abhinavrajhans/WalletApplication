@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+
 import java.math.BigDecimal;
 
 @Service
@@ -37,10 +38,10 @@ public class CreditDestinationWalletStep implements SagaStepInterface {
         // store the balance before the cerdit comes.
         // step 3 : Credit the destination wallet
         //wallet.credit(amount);
+        //walletRepository.save(wallet);
         walletRepository.updateBalanceByUserId(toWalletId, wallet.getBalance().add(amount));
         // by only updating the object only the java object in our memory will be updated.
         // in order to make sure this persists in the db u need to save using the repo
-        walletRepository.save(wallet);
         log.info("Wallet saved with balance {}", wallet.getBalance());
         sagaContext.put("toWalletBalanceAfterCredit", wallet.getBalance());
         // TODO : Once the context is updated in memory , we need to update the context in the database
@@ -67,10 +68,11 @@ public class CreditDestinationWalletStep implements SagaStepInterface {
         // store the balance before the cerdit comes.
         // step 3 : Debit the destination wallet
         //wallet.debit(amount);
+        // walletRepository.save(wallet);
         walletRepository.updateBalanceByUserId(toWalletId, wallet.getBalance().subtract(amount));
         // by only updating the object only the java object in our memory will be updated.
         // in order to make sure this persists in the db u need to save using the repo
-        walletRepository.save(wallet);
+
         log.info("Wallet saved with balance {}", wallet.getBalance());
         sagaContext.put("toWalletBalanceAfterCreditCompensation", wallet.getBalance());
         log.info("Credit Compensation of Destination wallet step executed successfully");

@@ -1,4 +1,5 @@
 package com.example.ShardedSagaWallet.entities;
+
 import org.apache.calcite.model.JsonType;
 
 import com.fasterxml.jackson.annotation.JsonSubTypes.Type;
@@ -11,20 +12,25 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Table(name = "saga_instance")
-public class SagaInstance extends BaseModel {
-
+public class SagaInstance {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "status", nullable = false)
+    @Builder.Default
     private SagaStatus status = SagaStatus.STARTED;
 
     @Type(JsonType.class)

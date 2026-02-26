@@ -65,7 +65,7 @@ public class TransferSagaService {
     public void exectueTransferSaga(Long sagaInstanceId) {
         // this will only do one single thing
         log.info("Executing transfer saga with id {}",sagaInstanceId);
-        // now we have to define the step that in which order the step should be executed
+        // now we have to define the steps that in which order the step should be executed
         try{
             for(SagaStepType step: SagaStepFactory.TransferMoneySagaSteps) {
                 // here we have every single step how should we execute the steps

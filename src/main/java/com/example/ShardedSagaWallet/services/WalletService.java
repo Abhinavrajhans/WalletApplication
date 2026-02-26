@@ -36,7 +36,7 @@ public class WalletService {
 
     public Wallet getWalletByUserId(Long userId) {
         log.info("Getting wallet by user id {}", userId);
-        return walletRepository.findByUserId(userId).get(0);
+        return walletRepository.findByUserId(userId).getFirst();
     }
 
     @Transactional

@@ -1,9 +1,7 @@
 package com.example.ShardedSagaWallet.entities;
 
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -21,6 +19,7 @@ public class SagaStep extends BaseModel {
     @Column(name="step_name" , nullable = false)
     private String stepName;
 
+    @Enumerated(EnumType.STRING)
     @Column(name="status",nullable=false)
     private StepStatus status;
 

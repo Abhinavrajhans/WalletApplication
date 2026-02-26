@@ -15,12 +15,9 @@ import java.util.Date;
 @Setter
 public class BaseModel {
 
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long id;
-
 
     @CreatedDate
     @Column(nullable=false, updatable = false)

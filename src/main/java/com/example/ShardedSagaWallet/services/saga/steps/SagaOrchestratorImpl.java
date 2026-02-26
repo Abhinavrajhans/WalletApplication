@@ -189,13 +189,12 @@ public class SagaOrchestratorImpl implements SagaOrchestrator{
         catch(Exception e){
             sagaStepDB.markAsFailed();
             sagaStepRepository.save(sagaStepDB);
-            log.error("Failed to execute the step {}", stepName , e);
+            log.error("Failed to compensate the step {}", stepName , e);
             return false;
         }
     }
 
     @Override
-    @Transactional
     public SagaInstance getSagaInstance(Long sagaInstanceId) {
         return sagaInstanceRepository.findById(sagaInstanceId).
                 orElseThrow(()->new RuntimeException("SagaInstance not found"));

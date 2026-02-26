@@ -21,7 +21,7 @@ import java.math.BigDecimal;
 @Slf4j
 public class TransactionController {
 
-    private final TransactionService transactionService;
+
     private final TransferSagaService transferSagaService;
 
     @PostMapping
@@ -30,7 +30,7 @@ public class TransactionController {
         try{
             Long sagaInstanceId = transferSagaService.initiateTransfer(
                     transactionRequestDTO.getFromWalletId(),
-                    transactionRequestDTO.getFromWalletId(),
+                    transactionRequestDTO.getToWalletId(),
                     transactionRequestDTO.getAmount(),
                     transactionRequestDTO.getDescription()
             );
@@ -44,3 +44,5 @@ public class TransactionController {
 
     }
 }
+
+

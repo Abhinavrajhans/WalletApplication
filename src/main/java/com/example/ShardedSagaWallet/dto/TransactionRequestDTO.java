@@ -1,5 +1,6 @@
 package com.example.ShardedSagaWallet.dto;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 import java.math.BigDecimal;
 
@@ -10,16 +11,16 @@ import java.math.BigDecimal;
 @Builder
 public class TransactionRequestDTO {
 
-    @NotBlank(message="fromWalletId is required")
+    @NotNull(message="fromWalletId is required")
     private Long fromWalletId;
 
-    @NotBlank(message="toWalletId is required")
+    @NotNull(message="toWalletId is required")
     private Long toWalletId;
 
-    @NotBlank(message="amount is required")
+    @NotNull(message="amount is required")
     private BigDecimal amount;
 
-    @NotBlank(message="description is required")
+    @NotNull(message="description is required")
     private String description;
 
 }
